@@ -2,59 +2,68 @@ import { Task } from "@/types/task.interface";
 import { v4 as uuidv4 } from "uuid";
 
 export class LocalStorageTaskRepository {
-  private tasks: Task[];
-
   constructor() {
-    const storedTasks = localStorage.getItem("tasks");
-    this.tasks = storedTasks ? JSON.parse(storedTasks) : [];
-
-    if (this.tasks.length === 0) {
+    const initialTask = this.fetchTasks();
+    if (initialTask.length === 0) {
       this.addTask("Comprar comida");
       this.addTask("Trabajar en lading page");
       this.addTask("Limpiar la ropa");
     }
   }
 
-  private saveTasks() {
-    localStorage.setItem("tasks", JSON.stringify(this.tasks));
+  private saveTasks(tasks: Task[]) {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }
+  private fetchTasks(): Task[] {
+    const storedTasks = localStorage.getItem("tasks");
+
+    return storedTasks ? JSON.parse(storedTasks) : [];
   }
 
   async getAllTasks(): Promise<Task[]> {
-    const allTasks = this.tasks;
+    const allTasks = this.fetchTasks();
     return allTasks;
   }
 
-  addTask(description: string): Task {
+  async addTask(description: string): Promise<Task> {
     const newTask: Task = {
       id: uuidv4(),
       description,
       completed: false,
     };
-    console.log("newTask", newTask);
+    const allTasks = this.fetchTasks();
+    const updatedTasks = [...allTasks, newTask];
 
-    this.tasks.push(newTask);
-    this.saveTasks();
+    this.saveTasks(updatedTasks);
 
     return newTask;
   }
 
-  markTaskAsCompleted(taskId: string, value: boolean): Task | undefined {
-    const task = this.tasks.find((t) => t.id === taskId);
+  async markTaskAsCompleted(
+    taskId: string,
+    value: boolean
+  ): Promise<Task | undefined> {
+    const allTasks = this.fetchTasks();
 
-    if (task) {
-      task.completed = value;
-      this.saveTasks();
-    }
-
-    return task;
-  }
-
-  deleteTask(taskId: string): boolean {
-    const taskIndex = this.tasks.findIndex((t) => t.id === taskId);
+    const taskIndex = allTasks.findIndex((t) => t.id === taskId);
 
     if (taskIndex !== -1) {
-      this.tasks.splice(taskIndex, 1);
-      this.saveTasks();
+      allTasks[taskIndex].completed = value;
+      this.saveTasks(allTasks);
+      return allTasks[taskIndex];
+    }
+
+    return undefined;
+  }
+
+  async deleteTask(taskId: string): Promise<boolean> {
+    const allTasks = this.fetchTasks();
+
+    const taskIndex = allTasks.findIndex((t) => t.id === taskId);
+
+    if (taskIndex !== -1) {
+      const updatedTasks = allTasks.splice(taskIndex, 1);
+      this.saveTasks(updatedTasks);
       return true;
     }
 
