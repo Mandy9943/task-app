@@ -5,7 +5,7 @@ import useSwr from "swr";
 const repository = new LocalStorageTaskRepository();
 
 const useGetTasks = () => {
-  const { data, isLoading, error } = useSwr("localstorage:tasks", () =>
+  const { data, isLoading, error, mutate } = useSwr("localstorage:tasks", () =>
     repository.getAllTasks()
   );
 
@@ -13,6 +13,7 @@ const useGetTasks = () => {
     tasks: data,
     isLoading: isLoading,
     error: error,
+    mutate: mutate,
   };
 };
 
