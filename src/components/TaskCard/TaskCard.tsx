@@ -21,6 +21,10 @@ const TaskCard = () => {
 
     mutate();
   };
+  const handleAddTask = async (description: string) => {
+    taskRepository.addTask(description);
+    mutate();
+  };
 
   return (
     <Card title="Tareas" className="min-w-[400px]">
@@ -43,7 +47,7 @@ const TaskCard = () => {
         })}
       </Space>
 
-      <AddTask />
+      <AddTask onSubmit={handleAddTask} />
     </Card>
   );
 };
