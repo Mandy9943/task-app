@@ -59,14 +59,13 @@ export class LocalStorageTaskRepository {
   async deleteTask(taskId: string): Promise<boolean> {
     const allTasks = this.fetchTasks();
 
-    const taskIndex = allTasks.findIndex((t) => t.id === taskId);
-
-    if (taskIndex !== -1) {
-      const updatedTasks = allTasks.splice(taskIndex, 1);
+    try {
+      const updatedTasks = allTasks.filter((t) => t.id !== taskId);
       this.saveTasks(updatedTasks);
-      return true;
-    }
 
-    return false;
+      return true;
+    } catch (error) {
+      return false;
+    }
   }
 }
