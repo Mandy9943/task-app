@@ -1,3 +1,4 @@
+import InspirationalTitle from "@/components/Title/Title";
 import dynamic from "next/dynamic";
 const TaskCard = dynamic(() => import("@/components/TaskCard/TaskCard"), {
   ssr: false,
@@ -5,8 +6,9 @@ const TaskCard = dynamic(() => import("@/components/TaskCard/TaskCard"), {
 export default function Home() {
   return (
     <main
-      className={`flex min-h-screen flex-col items-center justify-between p-4`}
+      className={`flex min-h-screen flex-col items-center px-4 py-10 gap-8`}
     >
+      <InspirationalTitle />
       <TaskCard />
     </main>
   );

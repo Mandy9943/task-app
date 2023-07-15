@@ -5,7 +5,9 @@ const quotesApi = axios.create({
 });
 class InsperationalQuotesRepository {
   async getQuotes(): Promise<IQuote[]> {
-    const { data: allQuotes } = await axios.get<IQuote[]>("/quotes");
+    const { data: allQuotes } = await quotesApi.get<IQuote[]>("/quotes");
+    console.log(" allQuotes", allQuotes);
+
     return allQuotes;
   }
 }
