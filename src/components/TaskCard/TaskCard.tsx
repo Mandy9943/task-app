@@ -2,6 +2,7 @@
 import useGetTasks from "@/hooks/useGetTasks";
 import { LocalStorageTaskRepository } from "@/services/TaskRepository/LocalStorageTaskRepository";
 import { Card, Space } from "antd";
+import AddTask from "./AddTask";
 import TaskItem from "./TaskItem";
 
 const taskRepository = new LocalStorageTaskRepository();
@@ -23,7 +24,12 @@ const TaskCard = () => {
 
   return (
     <Card title="Tareas" className="min-w-[400px]">
-      <Space direction="vertical" size="large" style={{ display: "flex" }}>
+      <Space
+        direction="vertical"
+        size="large"
+        style={{ display: "flex" }}
+        className="mb-5"
+      >
         {tasks?.map((task) => {
           return (
             <TaskItem
@@ -36,6 +42,8 @@ const TaskCard = () => {
           );
         })}
       </Space>
+
+      <AddTask />
     </Card>
   );
 };
