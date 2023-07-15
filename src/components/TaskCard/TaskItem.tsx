@@ -1,3 +1,4 @@
+import { DeleteOutlined } from "@ant-design/icons";
 import { Checkbox } from "antd";
 import { CheckboxChangeEvent } from "antd/es/checkbox";
 
@@ -14,9 +15,13 @@ const TaskItem = ({ isChecked, label, onComplete, onDelete }: IProps) => {
   };
 
   return (
-    <Checkbox checked={isChecked} onChange={onChangeValue}>
-      {label}
-    </Checkbox>
+    <div className="flex justify-between items-center">
+      <Checkbox checked={isChecked} onChange={onChangeValue}>
+        {label}
+      </Checkbox>
+
+      <DeleteOutlined className="cursor-pointer" onClick={onDelete} />
+    </div>
   );
 };
 

@@ -1,30 +1,41 @@
+"use client";
 import useGetTasks from "@/hooks/useGetTasks";
 import { LocalStorageTaskRepository } from "@/services/TaskRepository/LocalStorageTaskRepository";
-import { Card } from "antd";
+import { Card, Space } from "antd";
 import TaskItem from "./TaskItem";
 
 const taskRepository = new LocalStorageTaskRepository();
 
 const TaskCard = () => {
-  const { tasks } = useGetTasks();
-
-  const handleCompleteTask = (id: string, value: boolean) => {
-    taskRepository.markTaskAsCompleted(id, value);
-  };
-  const handleDeleteTask = (id: string) => {
-    taskRepository.deleteTask(id);
-  };
-
+  const { tasks, mutate } = useGetTasks();
   console.log("tasks", tasks);
+
+  const handleCompleteTask = async (id: string, value: boolean) => {
+    await taskRepository.markTaskAsCompleted(id, value);
+    mutate();
+  };
+  const handleDeleteTask = async (id: string) => {
+    await taskRepository.deleteTask(id);
+    console.log("id", id);
+
+    mutate();
+  };
 
   return (
     <Card title="Tareas" className="min-w-[400px]">
-      <TaskItem
-        isChecked={false}
-        label="Comprar comida"
-        onComplete={() => handleCompleteTask("", true)}
-        onDelete={() => handleDeleteTask("")}
-      />
+      <Space direction="vertical" size="large" style={{ display: "flex" }}>
+        {tasks?.map((task) => {
+          return (
+            <TaskItem
+              key={task.id}
+              isChecked={task.completed}
+              label={task.description}
+              onComplete={(value) => handleCompleteTask(task.id, value)}
+              onDelete={() => handleDeleteTask(task.id)}
+            />
+          );
+        })}
+      </Space>
     </Card>
   );
 };
