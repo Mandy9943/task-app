@@ -26,7 +26,7 @@ const AddTask = ({ onSubmit }: IProps) => {
   });
   return (
     <form className="flex gap-1 flex-col" onSubmit={formik.handleSubmit}>
-      <div className="flex gap-3">
+      <div className=" flex flex-col gap-3 sm:flex-row">
         <Input
           className="w-full flex-1"
           placeholder="Escribe una tarea"
@@ -39,7 +39,7 @@ const AddTask = ({ onSubmit }: IProps) => {
               : undefined
           }
         />
-        <Button style={{ width: 80 }} htmlType="submit">
+        <Button htmlType="submit" className="w-full sm:w-[80px]">
           Enviar
         </Button>
       </div>

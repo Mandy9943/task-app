@@ -8,7 +8,7 @@ import TaskItem from "./TaskItem";
 const taskRepository = new LocalStorageTaskRepository();
 
 const TaskCard = () => {
-  const { tasks, mutate } = useGetTasks();
+  const { tasks, mutate, isLoading } = useGetTasks();
   console.log("tasks", tasks);
 
   const handleCompleteTask = async (id: string, value: boolean) => {
@@ -27,7 +27,7 @@ const TaskCard = () => {
   };
 
   return (
-    <Card title="Tareas" className="min-w-[400px]">
+    <Card title="Tareas" className="max-w-[600px] w-full" loading={isLoading}>
       <Space
         direction="vertical"
         size="large"

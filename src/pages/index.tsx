@@ -5,7 +5,7 @@ const TaskCard = dynamic(() => import("@/components/TaskCard/TaskCard"), {
 export default function Home() {
   return (
     <main
-      className={`flex min-h-screen flex-col items-center justify-between p-24`}
+      className={`flex min-h-screen flex-col items-center justify-between p-4`}
     >
       <TaskCard />
     </main>
