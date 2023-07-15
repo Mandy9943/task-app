@@ -1,4 +1,5 @@
 import { Task } from "@/types/task.interface";
+import { v4 as uuidv4 } from "uuid";
 
 export class LocalStorageTaskRepository {
   private tasks: Task[];
@@ -25,10 +26,11 @@ export class LocalStorageTaskRepository {
 
   addTask(description: string): Task {
     const newTask: Task = {
-      id: Date.now().toString(),
+      id: uuidv4(),
       description,
       completed: false,
     };
+    console.log("newTask", newTask);
 
     this.tasks.push(newTask);
     this.saveTasks();
