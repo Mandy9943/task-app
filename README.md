@@ -1,5 +1,6 @@
 # Aplicación de Tareas
 
+
 ## Descripción
 Una aplicación simple para crear, eliminar y completar tareas usando el localstorage.
 
@@ -18,13 +19,13 @@ Asegúrate de tener instalados los siguientes requisitos previos en tu sistema:
 1. Clona el repositorio de la aplicación desde GitHub:
 
 ```bash
-git clone <url_del_repositorio>
+git clone <https://github.com/Mandy9943/task-app.git>
 ```
 
 2. Accede al directorio de la aplicación:
 
 ```bash
-cd nombre_de_la_aplicacion
+cd task-app
 ```
 
 3. Instala las dependencias del proyecto utilizando yarn:
