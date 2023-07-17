@@ -4,7 +4,6 @@ const { Title } = Typography;
 
 const InspirationalTitle = () => {
   const { quotes, isLoading } = useGetInperationalQuote();
-  console.log(" quotes", quotes);
 
   return (
     <div className="w-full max-w-[800px] flex flex-col px-10 text-center">
